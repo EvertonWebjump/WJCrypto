@@ -7,5 +7,19 @@
             "email": "evertommp@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "symfony/http-foundation": "^5.1"
+    },
+    "autoload": {
+    "psr-4": {
+        "Framework\\": "src",
+        "App\\": "app"
+    }
+},
+    "config": {
+        "process-timeout": 0
+    },
+    "scripts": {
+        "server": "php -S localhost:8000 -t public"
+    }
 }
