@@ -1,0 +1,11 @@
+{
+    "name": "everton/wj-crypto",
+    "description": "A cripto-moeda do e-commerce",
+    "authors": [
+        {
+            "name": "Everton Macena",
+            "email": "evertommp@gmail.com"
+        }
+    ],
+    "require": {}
+}

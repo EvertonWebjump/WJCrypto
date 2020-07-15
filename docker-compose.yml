@@ -1,0 +1,54 @@
+version: '3.3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    command: mysqld --user=root
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./database/dump:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_DATABASE: teste
+      MYSQL_USER: teste
+      MYSQL_PASSWORD: teste
+      MYSQL_ROOT_PASSWORD: qawsed
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+    depends_on:
+      - mysql
+
+  app:
+    image: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+
+  webserver:
+    image: webserver
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    volumes:
+      - .:/var/www
+
+volumes:
+  dbdata:
