@@ -4,7 +4,7 @@ $container['settings'] = function (){
     return [
         'db' => [
             'dsn' => 'mysql:host=192.168.99.100;',
-            'database' => 'teste',
+            'database' => 'wjcrytodb',
             'username' => 'teste',
             'password' => 'teste',
             'options' => [
@@ -25,4 +25,8 @@ $container['db'] = function ($c){
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
     return $pdo;
+};
+
+$container['users_model'] = function ($c) {
+    return new \App\Models\User($c);
 };

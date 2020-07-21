@@ -4,6 +4,8 @@
 namespace Framework;
 
 
+use Ramsey\Uuid\Uuid;
+
 abstract class Model
 {
     protected $db;
@@ -13,13 +15,13 @@ abstract class Model
 
     public function __construct($db)
     {
-        $this->db = $db;
+        $this->db = $db['db'];
         $this->queryBuilder = new QueryBuilder;
 
         if (!$this->table) {
             $table = explode('\\', \get_called_class());
             $table = array_pop($table);
-            $this->table = strtolower($table);
+            $this->table = strtolower($table)."s";
         }
     }
 
@@ -32,7 +34,7 @@ abstract class Model
     {
         $query = $this->queryBuilder->select($this->table)
             ->where($conditions)
-            ->getData();
+            ->get();
 
         $stmt = $this->db->prepare($query->sql);
         $stmt->execute($query->bind);
@@ -49,7 +51,7 @@ abstract class Model
     {
         $query = $this->queryBuilder->select($this->table)
             ->where($conditions)
-            ->getData();
+            ->get();
 
         $stmt = $this->db->prepare($query->sql);
         $stmt->execute($query->bind);
@@ -64,17 +66,20 @@ abstract class Model
      */
     public function create(array $data)
     {
+        $uuid = Uuid::uuid4()->toString();
+
+        $data += ['uuid' => $uuid];
 
         $data = $this->setData($data);
 
         $query = $this->queryBuilder->insert($this->table, $data)
-            ->getData();
+            ->get();
 
         $stmt = $this->db->prepare($query->sql);
+
         $stmt->execute($query->bind);
 
-        $result = $this->get(['id'=>$this->db->lastInsertId()]);
-
+        $result = $this->get(['uuid'=>$uuid]);
 
         return $result;
     }
@@ -92,7 +97,7 @@ abstract class Model
 
         $query = $this->queryBuilder->update($this->table, $data)
             ->where($conditions)
-            ->getData();
+            ->get();
 
         $stmt = $this->db->prepare($query->sql);
         $stmt->execute(array_values($query->bind));
@@ -111,16 +116,12 @@ abstract class Model
     {
         $result = $this->get($conditions);
 
-        $this->events->trigger('deleting.' . $this->table, null, $result);
-
         $query = $this->queryBuilder->delete($this->table)
             ->where($conditions)
-            ->getData();
+            ->get();
 
         $stmt = $this->db->prepare($query->sql);
         $stmt->execute($query->bind);
-
-        $this->events->trigger('deleted.' . $this->table, null, $result);
 
         return $result;
     }
@@ -136,6 +137,7 @@ abstract class Model
             $method = ucwords($method);
             $method = str_replace(' ', '', $method);
             $method = "set{$method}";
+
             if (method_exists($this, $method)) {
                 $data[$field] = $this->$method($value);
             }
