@@ -48,7 +48,13 @@ class AuthController
 
     public function getUser($container)
     {
-        $token = getallheaders()['Authorization'] ?? null;
+        $headers = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
+
+        if (!empty($headers)) {
+            if (preg_match('/Bearer\s(\S+)/', $headers, $matches)) {
+                $token = $matches[1];
+            }
+        }
 
         if (!$token) {
             $token = filter_input(\INPUT_GET, 'token');

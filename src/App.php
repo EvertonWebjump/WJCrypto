@@ -8,6 +8,10 @@ class App
 {
     private $container;
     private $router;
+    private $middlewares = [
+        'before' => [],
+        'after' => [],
+    ];
 
     public function __construct($container, $router)
     {
@@ -26,7 +30,15 @@ class App
                 'params' => $result['params']
             ];
 
+            foreach ($this->middlewares['before'] as $middleware) {
+                $middleware($this->container);
+            }
+
             $response($result['action'], $params);
+
+            foreach ($this->middlewares['after'] as $middleware) {
+                $middleware($this->container);
+            }
 
         } catch (\Framework\Exceptions\HttpException $exception){
             $this->container['exception'] = $exception;
@@ -49,6 +61,11 @@ class App
         }
 
         return $this->container['httpErrorHandler'];
+    }
+
+    public function middleware($on, $callback)
+    {
+        $this->middlewares[$on][] = $callback;
     }
 
 }
