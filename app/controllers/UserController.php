@@ -4,7 +4,13 @@
 namespace App\controllers;
 
 
-class UserController
+use Framework\Controller;
+
+class UserController extends Controller
 {
 
+    protected function getModel(): string
+    {
+        return 'user_model';
+    }
 }
