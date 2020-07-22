@@ -30,3 +30,7 @@ $container['db'] = function ($c){
 $container['user_model'] = function ($c) {
     return new \App\models\User($c);
 };
+
+$container['user_model'] = function ($c) {
+    return new \App\models\Account($c);
+};

@@ -15,3 +15,10 @@ $router->add("GET", '/api/user/(\d+)', "\App\controllers\UserController::show");
 $router->add("POST", '/api/user', "\App\controllers\UserController::create");
 $router->add("PUT", '/api/user/(\d+)', "\App\controllers\UserController::update");
 $router->add("DELETE", '/api/user/(\d+)', "\App\controllers\UserController::delete");
+
+//routes of operation to accounts
+$router->add("GET", '/api/accounts', "\App\controllers\AccountController::index");
+$router->add("GET", '/api/account/(\d+)', "\App\controllers\AccountController::show");
+$router->add("POST", '/api/account', "\App\controllers\AccountController::create");
+$router->add("PUT", '/api/account/(\d+)', "\App\controllers\AccountController::update");
+$router->add("DELETE", '/api/account/(\d+)', "\App\controllers\AccountController::delete");
