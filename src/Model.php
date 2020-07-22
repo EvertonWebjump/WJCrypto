@@ -3,8 +3,8 @@
 
 namespace Framework;
 
-
-use Ramsey\Uuid\Uuid;
+//
+//use Ramsey\Uuid\Uuid;
 
 abstract class Model
 {
@@ -66,9 +66,9 @@ abstract class Model
      */
     public function create(array $data)
     {
-        $uuid = Uuid::uuid4()->toString();
+//        $uuid = Uuid::uuid4()->toString();
 
-        $data += ['uuid' => $uuid];
+//        $data += ['uuid' => $uuid];
 
         $data = $this->setData($data);
 
@@ -79,7 +79,7 @@ abstract class Model
 
         $stmt->execute($query->bind);
 
-        $result = $this->get(['uuid'=>$uuid]);
+        $result = $this->get(['id'=>$this->db->lastInsertId()]);
 
         return $result;
     }

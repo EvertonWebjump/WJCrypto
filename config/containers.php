@@ -27,6 +27,6 @@ $container['db'] = function ($c){
     return $pdo;
 };
 
-$container['users_model'] = function ($c) {
-    return new \App\Models\User($c);
+$container['user_model'] = function ($c) {
+    return new \App\models\User($c);
 };

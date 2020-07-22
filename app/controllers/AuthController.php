@@ -15,7 +15,7 @@ class AuthController
         $email = $request->request->get('email');
         $password = $request->request->get('password');
 
-        $user = $container['users_model']->getByEmail($email);
+        $user = $container['user_model']->getByEmail($email);
         if (!$user) {
             throw new HttpException("Forbidden", 401);
         }
@@ -39,7 +39,7 @@ class AuthController
 
     public function register($container, $request)
     {
-        $user = $container['users_model']->create($request->request->all());
+        $user = $container['user_model']->create($request->request->all());
 
         if (!$user) return ResponseApi::jsonResponse(true, 'data invalid', [], 400 );
 
