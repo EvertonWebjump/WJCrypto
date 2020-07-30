@@ -38,3 +38,7 @@ $container['account_model'] = function ($c) {
 $container['address_model'] = function ($c) {
     return new \App\models\Address($c);
 };
+
+$container['company_model'] = function ($c) {
+    return new \App\models\Address($c);
+};
