@@ -34,3 +34,7 @@ $container['user_model'] = function ($c) {
 $container['account_model'] = function ($c) {
     return new \App\models\Account($c);
 };
+
+$container['address_model'] = function ($c) {
+    return new \App\models\Address($c);
+};

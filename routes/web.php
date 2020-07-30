@@ -26,3 +26,12 @@ $router->add("DELETE", '/api/account/(\d+)', "\App\controllers\AccountController
 $router->add("PUT", '/api/account/transfer/sender/(\d+)/recipent/(\d+)', "\App\controllers\AccountController::transfer");
 $router->add("PUT", '/api/account/deposit/(\d+)', "\App\controllers\AccountController::deposit");
 $router->add("PUT", '/api/account/withdrawal/(\d+)', "\App\controllers\AccountController::withdrawal");
+
+//routes of operation to addresses
+$router->add("GET", '/api/addresses', "\App\controllers\AddressController::index");
+$router->add("GET", '/api/address/(\d+)', "\App\controllers\AddressController::show");
+$router->add("POST", '/api/address', "\App\controllers\AddressController::create");
+$router->add("PUT", '/api/address/(\d+)', "\App\controllers\AddressController::update");
+$router->add("DELETE", '/api/address/(\d+)', "\App\controllers\AddressController::delete");
+
+
