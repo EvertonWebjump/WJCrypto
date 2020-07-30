@@ -5,7 +5,7 @@ $app->middleware('before', function ($c) use ($router) {
         return;
     }
 
-    $data = (new \App\Controllers\AuthController)->getUser($c);
+    $data = (new \App\controllers\AuthController)->getUser($c);
 
     $c['loggedUser'] = function () use ($data) {
         return $data;

@@ -22,3 +22,7 @@ $router->add("GET", '/api/account/(\d+)', "\App\controllers\AccountController::s
 $router->add("POST", '/api/account', "\App\controllers\AccountController::create");
 $router->add("PUT", '/api/account/(\d+)', "\App\controllers\AccountController::update");
 $router->add("DELETE", '/api/account/(\d+)', "\App\controllers\AccountController::delete");
+
+$router->add("PUT", '/api/account/transfer/sender/(\d+)/recipent/(\d+)', "\App\controllers\AccountController::transfer");
+$router->add("PUT", '/api/account/deposit/(\d+)', "\App\controllers\AccountController::deposit");
+$router->add("PUT", '/api/account/withdrawal/(\d+)', "\App\controllers\AccountController::withdrawal");

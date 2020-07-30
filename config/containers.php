@@ -3,7 +3,7 @@
 $container['settings'] = function (){
     return [
         'db' => [
-            'dsn' => 'mysql:host=192.168.99.100;',
+            'dsn' => 'mysql:host=mysql;',
             'database' => 'wjcrytodb',
             'username' => 'teste',
             'password' => 'teste',
@@ -31,6 +31,6 @@ $container['user_model'] = function ($c) {
     return new \App\models\User($c);
 };
 
-$container['user_model'] = function ($c) {
+$container['account_model'] = function ($c) {
     return new \App\models\Account($c);
 };
